@@ -41,31 +41,33 @@ void	B_to_A(int start, int end)
 	int		pivot;
 	int		rotate = 0;
 
-	if (!is_sorted(data.S, start, end) && size != 2)
+	if (!is_sorted(data.S, start, end))
 	{
-		size >>= 1;
-		pivot = data.SS[start + size];
-		while (size)
-		{
-			if (data.S[data.index] > pivot)
+		if (size != 2)
+		{			
+			size >>= 1;
+			pivot = data.SS[start + size];
+			while (size)
 			{
-				size--;
-				pa();
+				if (data.S[data.index] > pivot)
+				{
+					size--;
+					pa();
+				}
+				else
+				{
+					rb();
+					rotate++;
+				}
 			}
-			else
-			{
-				rb();
-				rotate++;
-			}
+			while (end != data.size && rotate--)
+				rrb();
+			A_to_B(start, start + ((end - start) >> 1));
+			B_to_A(start + ((end - start) >> 1), end);
 		}
-		while (end != data.size && rotate--)
-			rrb();
-		A_to_B(start, start + ((end - start) >> 1));
-		B_to_A(start + ((end - start) >> 1), end);
-		return ;
+		else
+			sb();
 	}
-	else if (size == 2)
-		sb();
 	while (size--)
 		pa();
 }
